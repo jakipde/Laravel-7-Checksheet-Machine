@@ -6,7 +6,6 @@
         <h1>LEMBAR KONTROL RETRY MESIN</h1>
     </center>
     <a href="{{ route('main.create') }}" class="btn btn-primary mb-3">Tambah</a>
-    <a href="{{ route('main.refresh') }}" class="btn btn-warning mb-3">Ambil Data</a>
     <button id="export-filtered" class="btn btn-success mb-3">Excel</button>
     <input type="text" id="date-range-picker" placeholder="Select Date Range">
     <br></br>
@@ -34,11 +33,11 @@
                     <td class="text-center">
                         {{-- <a href="{{ route('main.show', $main->id) }}" class="btn btn-info">View</a> --}}
                         {{-- <a href="{{ route('main.edit', $main->id) }}" class="btn btn-primary">Edit</a> --}}
-                        {{-- <form action="{{ route('main.destroy', $main->id) }}" method="POST" style="display: inline;"> --}}
+                        <form action="{{ route('main.destroy', $main->date) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirmAction('menghapus')">Delete</button>
-                        </form>
+                        </form>                                                                  
                     </td>
                 </tr>
             @endforeach
@@ -46,7 +45,8 @@
     </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('js/index.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+{{-- <script src="{{ asset('js/index.js') }}"></script> --}}
 <script>
     function confirmAction(action) {
         return confirm(`Apakah anda yakin ingin ${action} data?`);

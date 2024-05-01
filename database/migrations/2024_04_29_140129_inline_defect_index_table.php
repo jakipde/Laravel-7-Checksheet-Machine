@@ -10,7 +10,7 @@ class InlineDefectIndexTable extends Migration
     {
         Schema::connection('cmt')->create('inline_defect_index', function (Blueprint $table) {
             $table->string('line_id')->nullable();
-            $table->dateTimeTz('date')->nullable();
+            $table->datetime('date')->nullable();
             $table->integer('pf_retry')->nullable();
             $table->integer('pf_ng')->nullable();
             $table->integer('atsu_retry')->nullable();

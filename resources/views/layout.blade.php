@@ -17,48 +17,47 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-
+    
     <script>
 $(document).ready(function() {
     var table = $('#products-table').DataTable({
-        "order": [[0, "desc"]], // Order by the first column (No.) descending
+        "order": [[1, "desc"]], // Order by the second column (Tanggal) descending
         "paging": true,
         "searching": false,
         "columnDefs": [
             { "targets": "_all", "orderable": true },
         ],
-        "fnDrawCallback": function (oSettings) {
-            // Update the first column (No.) to start from 1 instead of 0
+        "fnDrawCallback": function(oSettings) {
+            // Update the first column (No) to start from 1 instead of 0
             this.api().column(0).nodes().each(function(cell, i) {
                 cell.innerHTML = i + 1;
             });
         }
     });
 
-            $('#date-range-picker').daterangepicker();
+    $('#date-range-picker').daterangepicker();
 
-            $('#date-range-picker').on('apply.daterangepicker', function(ev, picker) {
-                var startDate = picker.startDate.format('YYYY/MM/DD');
-                var endDate = picker.endDate.format('YYYY/MM/DD');
+    $('#date-range-picker').on('apply.daterangepicker', function(ev, picker) {
+    var startDate = picker.startDate.format('YYYY-MM-DD');
+    var endDate = picker.endDate.format('YYYY-MM-DD');
 
-                table.columns(9).search(startDate + '|' + endDate, true, false).draw();
-            });
+    table.column(1).search(startDate + '|' + endDate, true, false).draw(); // Assuming the date column is index 1
+    });
 
-            $('#export-filtered').on('click', function() {
-                var filteredData = table.rows({ search: 'applied' }).data().toArray();
-                var headers = table.columns().header().toArray().map(function(th) {
-                    return $(th).text();
-                });
-
-                var exportData = [headers].concat(filteredData);
-
-                var ws = XLSX.utils.aoa_to_sheet(exportData);
-                var wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "wow");
-                XLSX.writeFile(wb, "filtered_data.xlsx");
-            });
+    $('#export-filtered').on('click', function() {
+        var filteredData = table.rows({ search: 'applied' }).data().toArray();
+        var headers = table.columns().header().toArray().map(function(th) {
+            return $(th).text();
         });
+
+        var exportData = [headers].concat(filteredData);
+
+        var ws = XLSX.utils.aoa_to_sheet(exportData);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "wow");
+        XLSX.writeFile(wb, "filtered_data.xlsx");
+    });
+});
     </script>
 </body>
 </html>
-

@@ -5,6 +5,10 @@
         <center><h1>Tambah Data</h1></center>
         <form action="{{ route('main.store') }}" method="POST">
             @csrf
+            <div class="form-group" hidden>
+                <label for="line_id">Line ID :</label>
+                <input type="text" name="line_id" id="line_id" class="form-control" value="168" readonly>
+            </div>
             <div class="form-group">
                 <label for="shift">Shift :</label>
                 <select name="shift" id="shift" class="form-control">
@@ -13,6 +17,10 @@
                     <option value="B">B</option>
                     <option value="C">C</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Date :</label>
+                <input type="date" name="date" id="date" class="form-control">
             </div>
             <div class="form-group">
                 <label for="pf_retry">PF_RETRY :</label>
@@ -50,16 +58,15 @@
                     @endfor
                 </select>
             </div>
-                <button type="submit" class="btn btn-primary" onclick="return confirmAction('menambahkan', $('#parts').val())">Submit</button>
-            </form>            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>            
         <br></br>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
         function confirmAction(action) {
-            var partName = $('#parts option:selected').text();
-            return confirm(`Apakah anda yakin ingin ${action} data untuk Part ${partName} ?`);
+            return confirm(`Apakah anda yakin ingin ${action} data`);
         }
     </script>
 @endsection
