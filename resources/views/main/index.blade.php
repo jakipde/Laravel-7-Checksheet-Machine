@@ -2,27 +2,27 @@
 
 @section('content')
 <div class="container">
-    <center>
-        <h1>LEMBAR KONTROL RETRY MESIN</h1>
-    </center>
-    <a href="{{ route('main.create') }}" class="btn btn-primary mb-3">Tambah</a>
-    <button id="export-filtered" class="btn btn-success mb-3">Excel</button>
-    <input type="text" id="date-range-picker" placeholder="Select Date Range">
-    <br></br>
-    <table class="table" id="products-table">
-        <thead>
-            <tr>
-                <th class="text-center">No</th>
-                <th class="text-center">Tanggal</th>
-                <th class="text-center">PF_RETRY</th>
-                <th class="text-center">PF_NG</th>
-                <th class="text-center">ATSU_RETRY</th>
-                <th class="text-center">ATSU_NG</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="products-tablebody">
-            @foreach ($mains as $main)
+    <div class="row">
+            <h3>LEMBAR KONTROL RETRY MESIN
+                <a href="{{ route('main.create') }}" class="btn btn-primary mb-3">Tambah</a>
+                <button id="export-filtered" class="btn btn-xs btn-success float-right add" style="margin-right : 50px;">Excel</button>
+                <input type="text" id="date-range-picker" placeholder="Tanggal">
+            </h3>
+            <hr>
+
+            <table id="products-table" class="table table-bordered table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">PF_RETRY</th>
+                        <th class="text-center">PF_NG</th>
+                        <th class="text-center">ATSU_RETRY</th>
+                        <th class="text-center">ATSU_NG</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                @foreach ($mains as $main)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td class="text-center">{{ date('Y-m-d', strtotime($main->date)) }}</td>
@@ -41,30 +41,8 @@
                     </td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </table>
+        </div>
+    </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-{{-- <script src="{{ asset('js/index.js') }}"></script> --}}
-<script>
-    function confirmAction(action) {
-        return confirm(`Apakah anda yakin ingin ${action} data?`);
-    }
-</script>
-<style>
-    #products-table th,
-    #products-table td {
-    border-right: 2px solid black;
-    border-left: 2px solid black; /* Add a 2px solid black border to the right of each <th> and <td> element */
-    }
-
-    #products-table tbody tr:last-child td {
-    border-bottom: none; /* Remove the bottom border from the last row to avoid double borders */
-    }
-
-    #products-table tbody tr td {
-        border-bottom: 2px solid black; /* Add a 2px solid black border to the bottom of each <td> element */
-    }
-    </style>
 @endsection

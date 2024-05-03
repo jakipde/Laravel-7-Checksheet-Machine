@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label for="pf_ng">PF_NG :</label>
-                <select name="pf_ng" id="pf_ng" aclass="form-control select2">
+                <select name="pf_ng" id="pf_ng" class="form-control select2">
                     <option value="">-- PF_NG --</option>
                     @for ($i = 1; $i <= 100; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>

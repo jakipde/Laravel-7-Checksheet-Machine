@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Main;
+use App\Exports\MainExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MainController extends Controller
 {
@@ -11,6 +13,13 @@ class MainController extends Controller
     {
         $mains = Main::all();
         return view('main.index', compact('mains'));
+    }
+
+    public function export()
+    {
+        $filteredData = Main::all(); // Example: You might want to filter data here
+        
+        return Excel::download(new MainExport($filteredData), 'your-export.xlsx'); // Pass filtered data to MainExport
     }
 
     public function create()

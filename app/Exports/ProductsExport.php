@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use App\Models\Main;
 
 class MainExport implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithStyles
 {
@@ -27,13 +26,11 @@ class MainExport implements FromCollection, WithMapping, WithHeadings, ShouldAut
     public function map($product): array
     {
         return [
-            $product->id,
             $product->date,
             $product->pf_retry,
             $product->pf_ng,
             $product->atsu_retry,
             $product->atsu_ng,
-            // Exclude the action column
         ];
     }
 
@@ -46,16 +43,15 @@ class MainExport implements FromCollection, WithMapping, WithHeadings, ShouldAut
             'PF_NG',
             'ATSU_RETRY',
             'ATSU_NG',
-            // Exclude the action column heading
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:F1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('G:G')->getAlignment()->setHorizontal('');
         $rows = $sheet->getHighestRow();
         for ($i = 2; $i <= $rows; $i++) {
             $sheet->getStyle('A'.$i.':F'.$i)->getAlignment()->setHorizontal('center');
         }
-    }
+    }      
 }

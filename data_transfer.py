@@ -68,10 +68,13 @@ try:
             update_values = ", ".join([f"{column} = {column} + {quantity}" for column, quantity in defect_quantities.items()])
             destination_cursor.execute(f"UPDATE inline_defect_index SET {update_values} WHERE line_id = 168 AND date = ?", date_str)
         else:
-            # If no row exists, insert a new row
             columns = ", ".join(defect_mapping.values())
             values = ", ".join([str(defect_quantities.get(column, 0)) for column in defect_mapping.values()])
-            destination_cursor.execute(f"INSERT INTO inline_defect_index (line_id, date, {columns}) VALUES (168, ?, {values})", date_str)
+            destination_cursor.execute(f"INSERT INTO inline_defect_index (line_id, date, {columns}) VALUES (168, ?, {values})", datetime.strptime(date_str, '%Y-%m-%d'))
+
+        print(f"Date: {date_str}")
+        for defect_name, quantity in defect_quantities.items():
+            print(f"Defect: {defect_name}, Quantity: {quantity}")
 
     # Commit the transaction
     destination_connection.commit()
